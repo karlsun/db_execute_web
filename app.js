@@ -25,7 +25,7 @@ app.use(session({
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 初始化路由
+// init routes
 var fs = require('fs'),
     routeFiles = fs.readdirSync("./routes");
 
