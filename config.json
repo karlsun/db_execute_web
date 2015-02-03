@@ -1,0 +1,10 @@
+{
+    "port": 17042,
+    "db" : {
+        "hostname" : "172.16.40.190",
+        "port" : 1521,
+        "database" : "VMTEST",
+        "user" : "anoscfg",
+        "password" : "anoscfg"
+    }
+}

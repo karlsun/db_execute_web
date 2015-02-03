@@ -1,0 +1,19 @@
+extends ./layout
+block scripts
+    script(src='/js/index.js', type='text/javascript')
+block content
+    .row
+        #tree.col-md-3
+            .panel.panel-primary
+                .panel-heading 数据库表
+                .panel-body
+                    ul#table-list.list-unstyled
+                        each table in tables
+                            li
+                                a.table_link(href="javascript:void(0);", data-name=table.TABLE_NAME)= table.TABLE_NAME
+        #content.col-md-9
+            .panel.panel-default
+                .panel-heading
+                    a(href="javascript:void(0)") 执行
+                .panel-body
+                    #data-form
