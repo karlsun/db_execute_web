@@ -14,7 +14,7 @@ block content
         #content.col-md-9
             .panel.panel-default
                 .panel-heading
-                    a(href="javascript:void(0)") Execute
+                    a#link-execute(href="javascript:void(0)") Execute
                 .panel-body
                     textarea#execute-text(style="width:100%;height:120px;")
             .panel.panel-default
@@ -27,4 +27,5 @@ block content
                     #editor-form
             .panel.panel-default
                 .panel-heading Results
-                .panel-body No Results.
+                .panel-body
+                    #results No Results.
