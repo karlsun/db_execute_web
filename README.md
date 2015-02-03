@@ -44,3 +44,16 @@ If you have VisualStudio 2010 installed,
     
 ### Run Server
     > node bin\db_execute_web
+    
+### Configuration
+
+    {
+        "port":17042,  // server port
+        "db" : {
+            "hostname" : "127.0.0.1",
+            "port" : 1521,
+            "database" : "xe",
+            "user" : "user",
+            "password" : "user"
+        }
+    }
