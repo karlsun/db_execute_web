@@ -16,4 +16,15 @@ block content
                 .panel-heading
                     a(href="javascript:void(0)") Execute
                 .panel-body
-                    #data-form
+                    textarea#execute-text(style="width:100%;height:120px;")
+            .panel.panel-default
+                .panel-heading
+                    .row
+                        .col-md-6(style="text-align:left;") Editor
+                        .col-md-6(style="text-align:right;")
+                            a(href="javascript:void(0);", title="Set Stored Procedure") Set SP
+                .panel-body
+                    #editor-form
+            .panel.panel-default
+                .panel-heading Results
+                .panel-body No Results.

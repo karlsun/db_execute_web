@@ -3,7 +3,7 @@
  */
 (function(){
 
-    var _$data_from = $("#data-form");
+    var _$editor_form = $("#editor-form");
 
     $("#table-list").on("click", "a.table_link", function(){
         $.get("/get_columns/" + $(this).attr("data-name"), function(result){
@@ -14,9 +14,9 @@
                 for(;i < _len; i++){
                     _columns.push(result[i].COLUMN_NAME);
                 }
-                _$data_from.empty().html(_columns.join("<br />"));
+                _$editor_form.empty().html(_columns.join("<br />"));
             }else{
-                _$data_from.text("No Data.");
+                _$editor_form.text("No Data.");
             }
         });
     });
