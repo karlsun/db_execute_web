@@ -1,6 +1,6 @@
 extends ./layout
 block scripts
-    script(src='/js/index.js', type='text/javascript')
+    script(data-main='/js/index',src='/js/require.js', type='text/javascript')
 block content
     .row
         #tree.col-md-3

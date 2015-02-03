@@ -1,8 +1,7 @@
 /**
  * Created by Lei on 2015/2/3.
  */
-(function(){
-
+require(['lib/editor'], function(){
     var _$editor_form = $("#editor-form"),
         _$results = $("#results"),
         _$execute_text = $("#execute-text");
@@ -12,7 +11,7 @@
             if(result){
                 var _len = result.length,
                     _columns = [];
-                    i = 0;
+                i = 0;
                 for(;i < _len; i++){
                     _columns.push(result[i].COLUMN_NAME);
                 }
@@ -55,5 +54,4 @@
             }
         })
     });
-
-})();
+});
