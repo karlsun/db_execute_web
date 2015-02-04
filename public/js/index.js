@@ -1,10 +1,8 @@
 /**
  * Created by Lei on 2015/2/3.
  */
-require(['lib/editor'], function(){
-    var _$editor_form = $("#editor-form"),
-        _$results = $("#results"),
-        _$execute_text = $("#execute-text");
+require(['lib/editor', 'model/main'], function(editor, mainModel){
+    var _$editor_form = $("#editor-form");
 
     $("#table-list").on("click", "a.table_link", function(){
         $.get("/get_columns/" + $(this).attr("data-name"), function(result){
@@ -22,36 +20,5 @@ require(['lib/editor'], function(){
         });
     });
 
-    $("#link-execute").on("click", function(){
-        $.post("/sql/exec", {
-            sql : _$execute_text.val()
-        },function(result){
-            if(result instanceof Array){
-                var _len = result.length,
-                    i = 0,
-                    _table_html_arr = [];
-                if(_len > 0){
-                    _table_html_arr.push("<table class='table table-striped'>");
-                    _table_html_arr.push("<thead><tr>");
-                    var _first_row = result[0];
-                    for(var key in _first_row){
-                        _table_html_arr.push("<th>"+ key +"</th>")
-                    }
-                    _table_html_arr.push("</tr></thead>");
-                    for(; i < _len; i++){
-                        var _row = result[i];
-                        _table_html_arr.push("<tr>");
-                        for(var key in _row){
-                            _table_html_arr.push("<td>"+ _row[key] +"</td>")
-                        }
-                        _table_html_arr.push("</tr>");
-                    }
-                    _table_html_arr.push("</table>");
-                    _$results.empty().html(_table_html_arr.join(""));
-                }else{
-                    _$results.text("No results.");
-                }
-            }
-        })
-    });
+    ko.applyBindings(new mainModel);
 });
