@@ -8,7 +8,15 @@ var router = express.Router(),
 router.post('/exec', function(req, res){
     var _sql = req.body.sql;
     DBHelper.exec(_sql).then(function(results){
-        res.json(results)
+        res.json({
+            success: true,
+            data : results
+        })
+    }).catch(function(e){
+        res.json({
+            success: false,
+            msg : e.message
+        })
     });
 });
 

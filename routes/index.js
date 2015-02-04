@@ -3,12 +3,13 @@
  */
 var express = require('express');
 var router = express.Router(),
-    DBHelper = require('../services/DBHelper');
+    DBHelper = require('../services/DBHelper'),
+    config = require('../config.json');
 
 /* GET home page. */
 router.get('/', function(req, res) {
     DBHelper.getTables().then(function(tables){
-        res.render('index', {tables : tables});
+        res.render('index', {tables : tables, database : config.db.database});
     });
 });
 

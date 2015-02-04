@@ -32,3 +32,6 @@ node_modules
 
 # dist
 dist
+
+# css
+public/css/style.css

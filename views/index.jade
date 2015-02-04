@@ -1,5 +1,16 @@
 extends ./layout
 block scripts
+    script.
+        var __database = "#{database}";
+    script#executor-tab-template(type="text/html")
+        li(role="presentation", data-bind="css: { active: active}")
+            a(data-bind="attr: {href: href, 'aria-controls': tab_name}, text: tab_name", role="tab", data-toggle="tab")
+            <!-- ko if: remove -->
+            span.glyphicon.glyphicon-remove(data-bind="click: $parent.SQLExecutor.onCloseTab")
+            <!-- /ko -->
+    script#executor-tab-content-template(type="text/html")
+        .tab-pane(role="tabpanel", data-bind="attr: {id: id}, css: { active: active}")
+            textarea(data-bind="text: content")
     script(data-main='/js/index',src='/js/require.js', type='text/javascript')
 block content
     .row
@@ -9,22 +20,28 @@ block content
                 .panel-body
                     ul#table-list.list-unstyled
                         each table in tables
-                            li
-                                a.table_link(href="javascript:void(0);", data-name=table.TABLE_NAME)= table.TABLE_NAME
+                            li.clearfix
+                                .pull-left
+                                    span= table.TABLE_NAME
+                                .pull-right
+                                    a(href="javascript:void(0);")
+                                        span.glyphicon.glyphicon-search(data-bind='click: TableTree.doExecute', data-name=table.TABLE_NAME)
         #content.col-md-9
             .panel.panel-default
                 .panel-heading
-                    a(href="javascript:void(0)", data-bind="click: SQLExecutor.onExecute") Execute
+                    a(href="javascript:void(0)", data-bind="click: SQLExecutor.onExecute")
+                        span.glyphicon.glyphicon-play
                 .panel-body
-                    textarea#execute-text(style="width:100%;height:120px;")
+                    ul#executor-tabs.nav.nav-tabs(role="tablist", data-bind="template: { name: 'executor-tab-template', foreach: SQLExecutor.tabs, afterAdd: SQLExecutor.onAddTab}")
+                    #executor-text-list.tab-content(data-bind="template: {name: 'executor-tab-content-template', foreach: SQLExecutor.tabsContent}")
             .panel.panel-default
                 .panel-heading
                     .row
-                        .col-md-6(style="text-align:left;") Editor
+                        .col-md-6(style="text-align:left;") Table Form
                         .col-md-6(style="text-align:right;")
                             a(href="javascript:void(0);", title="Set Stored Procedure") Set SP
                 .panel-body
-                    #editor-form
+                    #table-form
             .panel.panel-default
                 .panel-heading Results
                 .panel-body
