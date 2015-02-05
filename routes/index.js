@@ -35,7 +35,9 @@ router.post('/save_form', function(req, res){
         }
         _sql += "[" + columns.join(",") + "]"
         _sql += " VALUE [" + values.join(",") + "];"
-        _sql += "exec " + _sp;
+        if(_sp != "N/A" && _sp.length > 0){
+            _sql += "exec " + _sp;
+        }
         DBHelper.exec(_sql).then(function(result){
             res.json({
                 success: true,
