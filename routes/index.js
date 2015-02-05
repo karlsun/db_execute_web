@@ -19,4 +19,35 @@ router.get('/get_columns/:table', function(req, res){
     });
 });
 
+router.post('/save_form', function(req, res){
+    var _form_val = req.body.formVals,
+        _table = req.body.table,
+        _sp = req.body.sp,
+        _sql = "INSERT INFO " + _table,
+        columns = [], values = [];
+    if(_form_val && _form_val.length > 0){
+        var _len = _form_val.length,
+            i = 0;
+        for(; i < _len; i++){
+            var _item = _form_val[i];
+            columns.push(_item.name);
+            values.push("'" + _item.val + "'");
+        }
+        _sql += "[" + columns.join(",") + "]"
+        _sql += " VALUE [" + values.join(",") + "];"
+        _sql += "exec " + _sp;
+        DBHelper.exec(_sql).then(function(result){
+            res.json({
+                success: true,
+                data: result
+            });
+        }).catch(function(e){
+            res.json({
+                success : false,
+                msg : e.message
+            });
+        });
+    }
+});
+
 module.exports = router;

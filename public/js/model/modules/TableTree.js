@@ -18,8 +18,11 @@ define(function(){
     }
 
     var TableTree = {
-        onClick : function(){
-
+        doEdit : function(data, event){
+            var _tableName = $(event.target).attr("data-name");
+            getColumns(_tableName, function(columns){
+                data.TableForm.setFormColumns(_tableName, columns);
+            });
         },
         doExecute : function(data, event){
             var _tableName = $(event.target).attr("data-name");

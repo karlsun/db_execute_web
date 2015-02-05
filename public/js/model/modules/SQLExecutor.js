@@ -5,7 +5,6 @@ define(function(){
 
     var _$results = $("#results"),
         _$executor_text_list = $("#executor-text-list"),
-        _$executor_tabs = $("#executor-tabs"),
         _identity = 0;
 
     function ResultGird(rows){
@@ -94,10 +93,13 @@ define(function(){
         onCloseTab : function(data, event){
             var _$li = $(event.target).parent(),
                 _$content = $(_$li.find(">a").attr("href")),
+                _active = _$li.hasClass("active"),
                 _$prev = _$li.prev();
             _$li.remove();
             _$content.remove();
-            _$prev.find(">a").tab("show");
+            if(_active){
+                _$prev.find(">a").tab("show");
+            }
         }
     };
 

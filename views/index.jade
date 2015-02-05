@@ -11,6 +11,12 @@ block scripts
     script#executor-tab-content-template(type="text/html")
         .tab-pane(role="tabpanel", data-bind="attr: {id: id}, css: { active: active}")
             textarea(data-bind="text: content")
+    script#table-form-template(type="text/html")
+        <!-- ko foreach: $data -->
+        .col-md-3
+            label(data-bind="text: name")
+            input.form-control(type="text", data-bind="attr: {name: name}")
+        <!-- /ko -->
     script(data-main='/js/index',src='/js/require.js', type='text/javascript')
 block content
     .row
@@ -22,13 +28,14 @@ block content
                         each table in tables
                             li.clearfix
                                 .pull-left
-                                    span= table.TABLE_NAME
+                                    a(href="javascript:void(0);", data-bind="click: TableTree.doEdit", data-name=table.TABLE_NAME)= table.TABLE_NAME
                                 .pull-right
                                     a(href="javascript:void(0);")
                                         span.glyphicon.glyphicon-search(data-bind='click: TableTree.doExecute', data-name=table.TABLE_NAME)
         #content.col-md-9
             .panel.panel-default
                 .panel-heading
+                    span(style="margin-right: 12px;") Runner
                     a(href="javascript:void(0)", data-bind="click: SQLExecutor.onExecute")
                         span.glyphicon.glyphicon-play
                 .panel-body
@@ -37,12 +44,29 @@ block content
             .panel.panel-default
                 .panel-heading
                     .row
-                        .col-md-6(style="text-align:left;") Table Form
-                        .col-md-6(style="text-align:right;")
-                            a(href="javascript:void(0);", title="Set Stored Procedure") Set SP
+                        .col-md-4(style="text-align:left;")
+                            span(style="margin-right: 12px;") Table Form
+                            a(href="javascript:void(0)", data-bind="click: TableForm.save") Insert
+                        .col-md-4
+                            | Table:
+                            span(style="font-weight:bold;", data-bind="text: TableForm.name")
+                        .col-md-4(style="text-align:right;")
+                            | SP:
+                            label(style="margin-right: 12px;",data-bind="text: TableForm.sp")
+                            a(href="javascript:void(0);", title="Set Stored Procedure", data-toggle="modal", data-target="#sp_modal") Set SP
                 .panel-body
-                    #table-form
+                    #table-form.row(data-bind="template: { name: 'table-form-template', data: TableForm.columns, afterRender: TableForm.reset}")
             .panel.panel-default
                 .panel-heading Results
                 .panel-body
                     #results No Results.
+    #sp_modal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="sp_modal_label", aria-hidden="true")
+        .modal-dialog(style="width:400px;")
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-label="Close")
+                        span(aria-hidden="true") &times;
+                    h4#sp_modal_label.modal-title Set SP
+                .modal-body
+                    label SP Name
+                    input.form-control(type="text", data-bind="textInput: TableForm.sp")
